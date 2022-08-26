@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>banner</title>
+    <link rel="stylesheet" href="//at.alicdn.com/t/c/font_3576813_xa6ra95ga4a.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+
+        }
+
+        img {
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1s linear;
+        }
+
+        .banner {
+            width: 480px;
+            margin: 30px auto;
+            position: relative;
+            height: 360px;
+        }
+
+        .dots {
+            border-radius: 5px;
+            position: absolute;
+            bottom: 3px;
+            left: 20px;
+            display: flex;
+            width: 80px;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .dots div {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: white;
+            cursor: pointer;
+        }
+
+        .turn {
+            position: absolute;
+            top: 165px;
+            height: 30px;
+            width: 100%;
+            color: white;
+            line-height: 20px;
+        }
+
+        .turn .left {
+            float: left;
+            background-color: rgba(30, 30, 30, .7);
+            cursor: pointer;
+            width: 20px;
+            text-align: center;
+        }
+
+        .turn .right {
+            float: right;
+            background-color: rgba(30, 30, 30, .7);
+            cursor: pointer;
+            width: 20px;
+            text-align: center;
+        }
+
+        .dots .selected {
+            background-color: orange;
+        }
+
+        .imgSelected {
+            opacity: 1;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="banner">
+        <img src="../../pic/hohai1.jpg" class="imgSelected">
+        <img src="../../pic/hohai2.jpg">
+        <img src="../../pic/hohai3.jpg">
+        <img src="../../pic/hohai4.jpg">
+        <div class="dots">
+            <div class="selected"></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="turn">
+            <div class="left">&lt;</div>
+            <div class="right">&gt;</div>
+        </div>
+    </div>
+
+    <script>
+        var imgs = document.querySelectorAll('img')
+        var lBtn = document.querySelector('.left')
+        var rBtn = document.querySelector('.right')
+        var dots = document.querySelectorAll('.dots div')
+        var banner = document.querySelector('.banner')
+        var body = document.querySelector('body')
+        function check(ele) {
+            var p
+            ele.forEach(function (t, index) {
+                if (t.className === 'selected' || t.className === 'imgSelected') {
+                    p = index
+
+                }
+            })
+            return p
+        }
+        function clear(ele) {
+            ele.forEach(function (t) {
+                t.className = ''
+            })
+        }
+        lBtn.onclick = function () {
+            var i = check(dots)
+            clear(dots)
+            clear(imgs)
+            dots[(i + 3) % (dots.length)].className = 'selected'
+            imgs[(i + 3) % (dots.length)].className = 'imgSelected'
+        }
+        rBtn.onclick = function () {
+            var i = check(dots)
+            clear(dots)
+            clear(imgs)
+            dots[(i + 1) % (dots.length)].className = 'selected'
+            imgs[(i + 1) % (dots.length)].className = 'imgSelected'
+        }
+        dots.forEach(function (t, i) {
+            t.onclick = function () {
+                clear(dots)
+                clear(imgs)
+                dots[i].className = 'selected'
+                imgs[i].className = 'imgSelected'
+            }
+        })
+            var timer = setInterval(function () {
+                var i = check(dots)
+                clear(dots)
+                clear(imgs)
+                dots[(i + 1) % (dots.length)].className = 'selected'
+                imgs[(i + 1) % (dots.length)].className = 'imgSelected'
+            }, 5000)
+    </script>
+</body>
+
+</html>
